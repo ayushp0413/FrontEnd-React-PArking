@@ -1,0 +1,57 @@
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     /* Adjust as needed */
+  }
+  
+  .max-width-container {
+    max-width: 800px;
+    background-color: white; /* Adjust as needed */
+    padding: 20px;
+  }
+  h2{
+    margin-bottom: 30px;
+  }
+  .parking-management-system {
+    text-align: center;
+  }
+  
+  .slots-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .slots {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .slot {
+    width: 80px; /* Adjust the width of the parking slot */
+    height: 80px; /* Adjust the height of the parking slot */
+    margin: 5px;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: lightgreen;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  
+  .slot.selected {
+    background-color: red;
+  }
+  
+  .slot:hover {
+    background-color: lightblue;
+  }
+  
+  .slot-status {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
