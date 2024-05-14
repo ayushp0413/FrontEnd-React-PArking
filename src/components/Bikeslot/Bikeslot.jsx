@@ -1,12 +1,29 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import './Bikeslot.css'; // Import the CSS file for styling
 import Navbar from '../Navbar/Navbar'; // Import the Navbar component if you have one
 
+function Receipt({ selectedSlots }) {
+  // Calculate total price
+  const totalPrice = selectedSlots.length * 30; // Assuming each slot costs 30 INR
+
+  return (
+    <div className="receipt">
+      <h3>Receipt</h3>
+      <p>Number of Slots Booked: {selectedSlots.length}</p>
+      <p>Selected Slots: {selectedSlots.join(', ')}</p>
+      <p>Total Price: {totalPrice} INR</p>
+      <button>Pay</button>
+    </div>
+  );
+}
+
 function BikeSlot() {
   // Initialize the state for available and selected slots
   const [availableSlots, setAvailableSlots] = useState(Array.from({ length: 36 }, (_, i) => i + 1));
   const [selectedSlots, setSelectedSlots] = useState([]);
+  const [showReceipt, setShowReceipt] = useState(false);
 
   // Function to handle slot selection
   const handleSlotSelection = (slot) => {
@@ -23,6 +40,7 @@ function BikeSlot() {
   const handleButtonClick = () => {
     // Perform action when button is clicked
     console.log('Receipt button clicked!');
+    setShowReceipt(true);
   };
 
   return (
@@ -37,7 +55,7 @@ function BikeSlot() {
                 {availableSlots.map(slot => (
                   <div
                     key={slot}
-                    id={`slot-${slot}`}
+                    id={`slot-${slot}`} // Assigning unique IDs to each slot
                     className={`bikeslot ${selectedSlots.includes(slot) ? 'selected' : ''}`}
                     onClick={() => handleSlotSelection(slot)}
                   >
@@ -53,6 +71,7 @@ function BikeSlot() {
             {selectedSlots.length > 0 && ( 
               <button onClick={handleButtonClick}>Receipt</button>
             )}
+            {showReceipt && selectedSlots.length > 0 && <Receipt selectedSlots={selectedSlots} />}
           </div>
         </div>
       </div>

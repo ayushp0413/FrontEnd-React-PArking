@@ -7,6 +7,7 @@ function SlotIndex() {
   // Initialize the state for available and selected slots
   const [availableSlots, setAvailableSlots] = useState(Array.from({ length: 32 }, (_, i) => i + 1));
   const [selectedSlots, setSelectedSlots] = useState([]);
+  const [showReceipt, setShowReceipt] = useState(false);
 
   // Function to handle slot selection
   const handleSlotSelection = (slot) => {
@@ -22,7 +23,29 @@ function SlotIndex() {
   // Function to handle button click
   const handleButtonClick = () => {
     // Perform action when button is clicked
-    console.log('Button clicked!');
+    console.log('Receipt button clicked!');
+    setShowReceipt(true);
+  };
+
+  // Function to calculate total price
+  const calculateTotalPrice = () => {
+    return selectedSlots.length * 60; // Assuming each slot costs 60 INR
+  };
+
+  // Function to render receipt details
+  const renderReceipt = () => {
+    if (showReceipt && selectedSlots.length > 0) {
+      return (
+        <div className="receipt">
+          <h3>Receipt</h3>
+          <p>Number of Slots Booked: {selectedSlots.length}</p>
+          <p>Selected Slots: {selectedSlots.join(', ')}</p>
+          <p>Total Price: {calculateTotalPrice()} INR</p>
+          <button>Pay</button>
+        </div>
+      );
+    }
+    return null;
   };
 
   return (
@@ -53,10 +76,10 @@ function SlotIndex() {
             {selectedSlots.length > 0 && ( 
               <button onClick={handleButtonClick}>Receipt</button>
             )}
+            {renderReceipt()}
           </div>
         </div>
-        </div>
-      
+      </div>
     </>
   );
 }
