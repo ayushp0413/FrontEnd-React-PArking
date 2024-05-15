@@ -51,19 +51,19 @@ function Home() {
                 <h2>Core Features</h2>
                 <p>Dive into the innovative features of ParkEase Pro that make parking management a breeze for operators and users alike.</p>
                 <div className='three-container' style={{display:'flex'}}>
-                <div className='feature-container' data-aos="zoom-in-up" data-aos-duration="2500">
+                <div className='feature-container' data-aos="zoom-in-up" data-aos-duration="1500">
                     <img src='src\components\Home\fire.png'></img>
                     <h3>Real-Time Data</h3>
                     <p>Stay updated with live parking information that allows efficient space utilization and enhances user experience.</p>
                     <button className='uniquebuttons'>Learn More</button>
                 </div>
-                <div className='feature-container'  data-aos="zoom-in-up" data-aos-duration="2500">
+                <div className='feature-container'  data-aos="zoom-in-up" data-aos-duration="1500">
                 <img src='src\components\Home\fire.png'></img>
                     <h3>Mobile Integration</h3>
                     <p>Harness the power of mobile technology to access and manage your parking solutions anytime, anywhere.</p>
                     <button className='uniquebuttons'>Learn More</button>
                 </div>
-                <div className='feature-container'  data-aos="zoom-in-up" data-aos-duration="2500">
+                <div className='feature-container'  data-aos="zoom-in-up" data-aos-duration="1500">
                 <img src='src\components\Home\fire.png'></img>
                     <h3>Payment System</h3>
                     <p>Our seamless payment solutions accelerate the check-out process, providing convenience and security.</p>
