@@ -1,37 +1,64 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from 'react';
-import './Dashboard.css'
+import React, { useState, useEffect } from 'react';
+import './Dashboard.css';
 import Navbar from '../Navbar/Navbar';
+import axios from 'axios';
 
 function Dashboard() {
-  // State to manage vehicle history data
-  // eslint-disable-next-line no-unused-vars
-  const [vehicleHistory, setVehicleHistory] = useState([
-    { vehicleNumber: "ABC123", date: "2024-04-07", entryTime: "10:00 AM", exitTime: "12:00 PM" },
-    { vehicleNumber: "XYZ456", date: "2024-04-07", entryTime: "01:00 PM", exitTime: "03:00 PM" }
-  ]);
+  const [userName, setUserName] = useState('');
+  const [userAge, setUserAge] = useState('');
+  const [useremail, setUserEmail] = useState('');
+  const [uservehicleNumber, setUserVehicleNumber] = useState('');
+  const [usercontactNumber, setUserContactNumber] = useState('');
+  const [useraddress, setUserAddress] = useState('');
+
+  useEffect(() => {
+    const fetchUserName = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          throw new Error('No token found');
+        }
+        const response = await axios.get('http://localhost:5000/api/auth/user', {
+          headers: {
+            'x-auth-token': token
+          }
+        });
+        const { name, age ,email ,vehicleNumber , contactNumber ,address} = response.data;
+        setUserName(name);
+        setUserAge(age);
+        setUserEmail(email);
+        setUserVehicleNumber(vehicleNumber)
+        setUserContactNumber(contactNumber)
+        setUserAddress(address)
+
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchUserName();
+  }, []);
 
   return (
     <>
-    <Navbar></Navbar>
-    <div className="container-dashboard">
-      <div className="firstContainer">
-        <div className="profile">
-          {/* Circular space for image */}
-          <div className="image">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKVgdPnMdBjCdxkKFnwvfzcvEA6RTfYRMuEA&s" alt="none" />
-          </div>
-          {/* Name, Age, Vehicle Number */}
-          <div className="details">
-            <p1>John Doe</p1>
-            <p>Age:30</p>
-          </div>
-          <div className="detail">
-            <p><strong>Number:-</strong> XYZ123</p>
-            <p><strong>Email:-</strong> janirudh5525@gmail.com</p>
-            <p><strong>Contact No:-</strong> 6266927816</p>
-            <p><strong>address:-</strong> xxx colony,indore</p>
-            <p><strong>Vehicle Registered:-</strong> 2</p>
+      <Navbar />
+      <div className="container-dashboard">
+        <div className="firstContainer">
+          <div className="profile">
+            <div className="image">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKVgdPnMdBjCdxkKFnwvfzcvEA6RTfYRMuEA&s" alt="Profile" />
+            </div>
+            <div className="details">
+              <p><strong>Name:- {userName}</strong></p> {/* Display the user's name */}
+              <p>Age:{userAge}</p>
+            </div>
+            <div className="detail">
+            <p><strong>Number:-</strong> {uservehicleNumber}</p>
+            <p><strong>Email:-</strong> {useremail}</p>
+            <p><strong>Contact No:-</strong> {usercontactNumber}</p>
+            <p><strong>address:-</strong> {useraddress}</p>
+            {/* <p><strong>Vehicle Registered:-</strong> 2</p> */}
           </div>
         </div>
       </div>
@@ -44,7 +71,7 @@ function Dashboard() {
           </div>
         </div>
         <div className="box2">
-          <p1>History</p1>
+          <p>History</p>
           <table id="vehicleTable">
             <thead>
               <tr>
@@ -54,24 +81,13 @@ function Dashboard() {
                 <th>Exit Time</th>
               </tr>
             </thead>
-            <tbody>
-              {/* Map through vehicle history data and render table rows */}
-              {vehicleHistory.map((entry, index) => (
-                <tr key={index}>
-                  <td>{entry.vehicleNumber}</td>
-                  <td>{entry.date}</td>
-                  <td>{entry.entryTime}</td>
-                  <td>{entry.exitTime}</td>
-                </tr>
-              ))}
-            </tbody>
+            
           </table>
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 }
 
 export default Dashboard;
-

@@ -54,4 +54,7 @@
     margin-top: 20px;
     text-align: center;
   }
+  .slot.booked {
+    background-color: red; /* Change the background color to red for booked slots */
+  }
   

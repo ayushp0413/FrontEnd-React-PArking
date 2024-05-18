@@ -11,9 +11,9 @@ const Login = () => {
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
       const response = await axios.post('http://localhost:5000/api/auth/login', values);
-      console.log(response.data);
-      // Redirect to home page upon successful login
-      navigate('/home');
+      const { token } = response.data; // Extract the token from the response
+      localStorage.setItem('token', token); // Store the token in local storage
+      navigate('/home'); // Redirect to home page upon successful login
     } catch (err) {
       if (err.response && err.response.status === 401) {
         setErrors({ email: 'The provided email or password is incorrect or not found in the database.' });

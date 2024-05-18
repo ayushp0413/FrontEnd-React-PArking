@@ -1,56 +1,55 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
-import './SlotIndex.css'; // Import the CSS file for styling
-import Navbar from '../Navbar/Navbar'; // Import the Navbar component if you have one
+import React, { useState, useEffect } from 'react';
+import './SlotIndex.css';
+import Navbar from '../Navbar/Navbar';
+import axios from 'axios';
+
+import { Link } from 'react-router-dom';
 
 function SlotIndex() {
-  // Initialize the state for available and selected slots
-  const [availableSlots, setAvailableSlots] = useState(Array.from({ length: 32 }, (_, i) => i + 1));
+  const startSlot = 36; // Starting slot number
+  const numSlots = 32; // Number of slots
+
+  const [availableSlots, setAvailableSlots] = useState(Array.from({ length: numSlots }, (_, i) => startSlot + i));
   const [selectedSlots, setSelectedSlots] = useState([]);
   const [showReceipt, setShowReceipt] = useState(false);
+  const [bookedSlots, setBookedSlots] = useState([]);
 
-  // Function to handle slot selection
+  useEffect(() => {
+    const fetchBookedSlots = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/booked-slots');
+        setBookedSlots(response.data);
+      } catch (err) {
+        console.error('Error fetching booked slots:', err);
+      }
+    };
+
+    fetchBookedSlots();
+  }, []);
+
   const handleSlotSelection = (slot) => {
     if (selectedSlots.includes(slot)) {
-      // Deselect the slot if already selected
+      // If slot is already selected, remove it from the selected slots
       setSelectedSlots(selectedSlots.filter(selectedSlot => selectedSlot !== slot));
-    } else {
-      // Select the slot permanently
+    } else if (!bookedSlots.includes(slot)) {
+      // If slot is not already booked, add it to the selected slots
       setSelectedSlots([...selectedSlots, slot]);
     }
   };
 
-  // Function to handle button click
-  const handleButtonClick = () => {
-    // Perform action when button is clicked
-    console.log('Receipt button clicked!');
-    setShowReceipt(true);
-  };
-
-  // Function to calculate total price
-  const calculateTotalPrice = () => {
-    return selectedSlots.length * 60; // Assuming each slot costs 60 INR
-  };
-
-  // Function to render receipt details
-  const renderReceipt = () => {
-    if (showReceipt && selectedSlots.length > 0) {
-      return (
-        <div className="receipt">
-          <h3>Receipt</h3>
-          <p>Number of Slots Booked: {selectedSlots.length}</p>
-          <p>Selected Slots: {selectedSlots.join(', ')}</p>
-          <p>Total Price: {calculateTotalPrice()} INR</p>
-          <button>Pay</button>
-        </div>
-      );
+  const handleButtonClick = async () => {
+    try {
+      await axios.post('http://localhost:5000/api/booked-slots', { selectedSlots });
+      setShowReceipt(true);
+    } catch (err) {
+      console.error('Error storing selected slots:', err.response.data);
     }
-    return null;
   };
-
+ 
   return (
     <>
-      <Navbar /> {/* If you have a Navbar component */}
+      <Navbar />
       <div className="center-container">
         <div className="max-width-container">
           <div className="parking-management-system">
@@ -61,7 +60,8 @@ function SlotIndex() {
                   <div
                     key={slot}
                     id={`slot-${slot}`}
-                    className={`slot ${selectedSlots.includes(slot) ? 'selected' : ''}`}
+                    className={`slot ${selectedSlots.includes(slot) ? 'selected' :
+                      bookedSlots.includes(slot) ? 'booked' : ''}`}
                     onClick={() => handleSlotSelection(slot)}
                   >
                     {slot}
@@ -73,10 +73,17 @@ function SlotIndex() {
               <p>Available Slots: {availableSlots.length}</p>
               <p>Selected Slots: {selectedSlots.length}</p>
             </div>
-            {selectedSlots.length > 0 && ( 
+            {selectedSlots.length > 0 && (
               <button onClick={handleButtonClick}>Receipt</button>
             )}
-            {renderReceipt()}
+            {showReceipt && selectedSlots.length > 0 && (
+              <div className="receipt">
+                <h3>Receipt</h3>
+                <p>Number of Slots Booked: {selectedSlots.length}</p>
+                <p>Selected Slots: {selectedSlots.join(', ')}</p>
+                <Link to={'/Qrbike'}><button>Pay</button></Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -85,4 +92,3 @@ function SlotIndex() {
 }
 
 export default SlotIndex;
-

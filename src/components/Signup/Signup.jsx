@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    username: '',
+    name: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -21,7 +21,7 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const { 
-    username, 
+    name, 
     email, 
     password, 
     confirmPassword, 
@@ -44,7 +44,7 @@ const Signup = () => {
 
     try {
       const response = await axios.post('http://localhost:5000/api/auth/register', {
-        name: username,
+        name,
         email,
         password,
         contactNumber,
@@ -71,7 +71,7 @@ const Signup = () => {
               id="username"
               name="username"
               placeholder="Enter your username"
-              value={username}
+              value={name}
               onChange={onChange}
             />
           </div>
