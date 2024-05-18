@@ -45,7 +45,7 @@ const Login = () => {
           {({ isSubmitting }) => (
             <Form className="details-form">
               <div className="form-group">
-                <label htmlFor="email">Email / Username:</label>
+                <label htmlFor="email">Email:</label>
                 <Field type="text" id="email" name="email" placeholder="Enter your email or username" />
                 <ErrorMessage name="email" component="div" className="error-message" />
               </div>

@@ -24,8 +24,8 @@ function Dashboard() {
             'x-auth-token': token
           }
         });
-        const { name, age ,email ,vehicleNumber , contactNumber ,address} = response.data;
-        setUserName(name);
+        const { username, age ,email ,vehicleNumber , contactNumber ,address} = response.data;
+        setUserName(username);
         setUserAge(age);
         setUserEmail(email);
         setUserVehicleNumber(vehicleNumber)
