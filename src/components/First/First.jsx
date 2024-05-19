@@ -2,14 +2,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import "./First.css"
+import backVideo  from "./backvideo.mp4"
 
 const First= () => {
   return (
     <>
       <div className="login-details-container">
         <video autoPlay muted className="background-video">
-          <source src="src\components\First\backvideo.mp4" type="video/mp4" />
-          
+          <source src={backVideo} type="video/mp4" />
         </video>
         <div className="button-container">
          <Link to={"/login"}><button className='Login'>Login</button></Link>

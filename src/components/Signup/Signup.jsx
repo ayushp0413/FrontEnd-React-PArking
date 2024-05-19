@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import './Signup.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import background from ".././First/background.jpg"
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -43,7 +44,7 @@ const Signup = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', {
+      const response = await axios.post('http://localhost:4000/api/v1/auth/signUp', {
         username,
         email,
         password,
@@ -61,7 +62,7 @@ const Signup = () => {
 
   return (
     <div className="Signup-details-container">
-      <img src='src\components\First\background.jpg' alt="background"></img>
+      <img src={background} alt="background"></img>
       <div className="details-container">
         <form className="details-form" onSubmit={onSubmit}>
           <div className="form-group">
